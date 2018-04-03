@@ -1,16 +1,17 @@
 
 ;; Erlang Path
+(spacemacs|define-jump-handlers erlang-mode)
 (setq erlang-root-path "/usr/local/Cellar/erlang/17.5")
 (setq erlang-root-dir erlang-root-path)
 (setq exec-path (cons (concat erlang-root-path "/bin") exec-path))
 (setq erlang-man-root-dir (concat erlang-root-path "/man"))
 
 ;; Distel
-(setq erlang-distel-path "~/.spacemacs.d/layers/lang/my-erlang/local/distel-4.03/elisp")
+; (setq erlang-distel-path "~/.spacemacs.d/layers/lang/my-erlang/local/distel-4.03/elisp")
+(setq erlang-distel-path "~/.spacemacs.d/layers/lang/my-erlang/local/distel/elisp")
 
 ;; Erlang Cookie
 (setq derl-cookie "k35bz75vc881x")
-;; (setq derl-cookie "k35bz75vc881x")
 
 ;; Esense
 ;; (defvar esensePath "~/.emacs.d/lisp/erlang/esense-1.12")
@@ -44,12 +45,6 @@
 ;; prevent annoying hang-on-compile
 ;(defvar inferior-erlang-prompt-timeout t)
 
-(defun my-erlang-include-dirs-function ()
-  ""
-  (list
-   "inc" "../inc" "../../inc" "../../../inc" "../../../../inc"
-   "include" "../include" "../../include" "../../../include"))
-(defun my-erlang-code-dirs-function () "" (list "../ebin" "../../ebin" "../../../ebin"))
 ;; (setq erlang-flymake-get-include-dirs-function 'my-erlang-include-dirs-function)
 ;; (setq erlang-flymake-get-code-path-dirs-function 'my-erlang-code-dirs-function)
 ;; (eval-when-compile (require 'flycheck))

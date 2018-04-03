@@ -33,8 +33,6 @@
   '(
     company
     erlang
-    ; ggtags
-    ; helm-gtags
     flycheck
     )
   "The list of Lisp packages required by the my-erlang layer.
@@ -87,23 +85,23 @@ Each entry is either:
 
 (defun my-erlang/post-init-flycheck () ""
   (spacemacs/add-flycheck-hook 'erlang-mode)
-  (spacemacs|diminish flycheck-mode " fc" " fc")
-  (spacemacs|diminish auto-complete-mode " ac" " ac")
+  ;; (spacemacs|diminish flycheck-mode " fc" " fc")
+  ;; (spacemacs|diminish auto-complete-mode " ac" " ac")
   (setq flycheck-erlang-include-path
-        (append flycheck-erlang-include-path
-                '("inc" "../inc" "../../inc" "../../../inc"
-                  "include" "../include" "../../include" "../../../include")))
+      (append flycheck-erlang-include-path
+              '("inc" "../inc" "../../inc" "../../../inc"
+                "include" "../include" "../../include" "../../../include")))
   (setq flycheck-erlang-library-path
-        (append flycheck-erlang-library-path
-                '("../ebin" "../../ebin" "../../../ebin")))
+      (append flycheck-erlang-library-path
+              '("../ebin" "../../ebin" "../../../ebin")))
   (setq flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list)
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
   )
 
-;(defun erlang/post-init-ggtags ()
-;  (add-hook 'erlang-mode-local-vars-hook #'spacemacs/ggtags-mode-enable))
-;
-;(defun erlang/post-init-helm-gtags ()
-;  (spacemacs/helm-gtags-define-keys-for-mode 'erlang-mode))
+(defun erlang/post-init-ggtags ()
+  (add-hook 'erlang-mode-local-vars-hook #'spacemacs/ggtags-mode-enable))
+
+(defun erlang/post-init-helm-gtags ()
+  (spacemacs/helm-gtags-define-keys-for-mode 'erlang-mode))
 
 ;;; packages.el ends here

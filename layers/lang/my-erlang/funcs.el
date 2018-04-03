@@ -62,4 +62,12 @@
   (require 'wrangler)
 )
 
+;; Flymake
+(defun my-erlang-include-dirs-function ()
+  ""
+  (list
+   "inc" "../inc" "../../inc" "../../../inc" "../../../../inc"
+   "include" "../include" "../../include" "../../../include"))
+(defun my-erlang-code-dirs-function () "" (list "../ebin" "../../ebin" "../../../ebin"))
+
 ;; Erlang
