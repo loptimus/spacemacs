@@ -11,7 +11,15 @@
 
 (configuration-layer/declare-layers
  '(
-   my-erlang
+   spacemacs-completion
+   ;; ivy
+   helm
+   auto-completion
+   syntax-checking
+   emacs-lisp
+   python
    ;; my-python
+   graphviz
+   my-erlang
    )
  )

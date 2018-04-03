@@ -44,7 +44,7 @@
 ;;; Default only Read （默认指定为只读模式）
 (defun make-some-files-read-only ()
   "when file opened is of a certain mode, make it read only"
-  (when (memq major-mode '(c-mode c++-mode erlang-mode php-mode python-mode lua-mode))
+  (when (memq major-mode '(c-mode c++-mode erlang-mode php-mode python-mode lua-mode emacs-lisp-mode))
     (toggle-read-only 1)))
 
 ;;; 行复制

@@ -63,8 +63,6 @@ Each entry is either:
     ; (require 'tabbar)
     (tabbar-mode t)
     (set-tarbar)
-    (add-hook 'find-file-hooks 'make-some-files-read-only)
-    (undo-tree-keymap)
     (tabbar-keymap)
 )
 

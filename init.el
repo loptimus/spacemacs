@@ -10,7 +10,7 @@ values."
    ;; Base distribution to use. This is a layer contained in the directory
    ;; `+distribution'. For now available distributions are `spacemacs-base'
    ;; or `spacemacs'. (default 'spacemacs)
-   dotspacemacs-distribution 'spacemacs
+   dotspacemacs-distribution 'spacemacs-base
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
    dotspacemacs-configuration-layer-path '()
@@ -24,14 +24,10 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      ;; better-defaults
-     ivy
-     auto-completion
-     git
-     syntax-checking
-     emacs-lisp
-     python
+     ;; auto-completion
+     ;; git
+     ;; syntax-checking
      ;; chinese
-     ;; php
      ;; markdown
      ;; org
      ;; (shell :variables
@@ -80,10 +76,10 @@ values."
    ;; uses emacs key bindings for vim's insert mode, but otherwise leaves evil
    ;; unchanged. (default 'vim)
    dotspacemacs-editing-style 'emacs
-;;   dotspacemacs-editing-style '(hybrid :variables
-;;                                       hybrid-mode-enable-evilified-state nil 
-;;                                       hybrid-mode-enable-hjkl-bindings t
-;;                                       hybrid-mode-default-state 'emacs)
+   ;; dotspacemacs-editing-style '(hybrid :variables
+   ;;                                       hybrid-mode-enable-evilified-state nil 
+   ;;                                       hybrid-mode-enable-hjkl-bindings t
+   ;;                                       hybrid-mode-default-state 'emacs)
 
    ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
    dotspacemacs-verbose-loading nil
@@ -118,21 +114,21 @@ values."
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Consolas"
-                               :size 14
+                               :size 16
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1.3)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
    ;; (default "M-m")
-   dotspacemacs-emacs-leader-key "M-m"
+   dotspacemacs-emacs-leader-key "M-RET"
    ;; Major mode leader key is a shortcut key which is the equivalent of
    ;; pressing `<leader> m`. Set it to `nil` to disable it. (default ",")
    dotspacemacs-major-mode-leader-key ","
    ;; Major mode leader key accessible in `emacs state' and `insert state'.
    ;; (default "C-M-m)
-   dotspacemacs-major-mode-emacs-leader-key "C-M-m"
+   dotspacemacs-major-mode-emacs-leader-key "C-M-RET"
    ;; These variables control whether separate commands are bound in the GUI to
    ;; the key pairs C-i, TAB and C-m, RET.
    ;; Setting it to a non-nil value, allows for separate commands under <C-i>
@@ -241,7 +237,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
+   dotspacemacs-whitespace-cleanup 'changed
    ))
 
 (defun dotspacemacs/user-init ()
@@ -256,7 +252,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
           ("org-cn"   . "http://elpa.emacs-china.org/org/")
           ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")))
 
-  (add-to-list 'custom-theme-load-path "~/.spacemacs.d/local/themes/monokai-emacs")
+  ;; 主题名称
+  (add-to-list 'custom-theme-load-path "~/.spacemacs.d/local/themes/monokai-emacs")  
   )
 
 (defun dotspacemacs/user-config ()
@@ -266,7 +263,22 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  ;; (add-to-list 'load-path "~/.emacs.d")
   ;; (with-eval-after-load 'helm
-  ;;   (setq helm-display-function 'helm-default-display-buffer))
-  )
+  ;; (setq helm-display-function 'helm-default-display-buffer))
+  (setq powerline-default-separator 'nil)
+  (setq dotspacemacs-mode-line-unicode-symbols 'nil)
+  (setq yas-snippet-dirs
+        '("~/.spacemacs.d/snippets"                 ;; personal snippets
+          ))
+  ;; (使用4个空格代替Tab)
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 4)
+  ;; 只读文件，快捷键F3控制
+  (add-hook 'find-file-hooks 'make-some-files-read-only)
+  ;; 括号匹配时显示另外一边的括号，而不是烦人的跳到另一个括号
+  (show-paren-mode t)
+  (setq show-paren-style 'parentheses)
+  ;; 光标靠近鼠标指针时，让鼠标指针自动让开，别挡住视线
+  ;; (mouse-avoidance-mode 'animate)
+  (undo-tree-keymap)
+ )
