@@ -88,6 +88,7 @@ Each entry is either:
 
 (defun liwl/init-powerline ()
   (setq powerline-display-hud nil)
+  (setq powerline-default-separator nil)
   (powerline-default-theme)
   )
 
