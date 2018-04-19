@@ -31,6 +31,8 @@
 
 (defconst liwl-packages
   '(tabbar
+    powerline
+    indent-guide
     )
   "The list of Lisp packages required by the liwl layer.
 
@@ -64,6 +66,29 @@ Each entry is either:
     (tabbar-mode t)
     (set-tarbar)
     (tabbar-keymap)
-)
+    )
+
+(defun liwl/init-indent-guide ()
+  (use-package indent-guide
+    :defer t
+    :init
+    (progn
+      (setq indent-guide-delay 0.3)
+      (spacemacs|add-toggle indent-guide
+        :mode indent-guide-mode
+        :documentation
+        "Highlight indentation level at point. (alternative to highlight-indentation)."
+        :evil-leader "ti")
+      (spacemacs|add-toggle indent-guide-globally
+        :mode indent-guide-global-mode
+        :documentation
+        "Highlight indentation level at point globally. (alternative to highlight-indentation)."
+        :evil-leader "t TAB")))
+  )
+
+(defun liwl/init-powerline ()
+  (setq powerline-display-hud nil)
+  (powerline-default-theme)
+  )
 
 ;;; packages.el ends here

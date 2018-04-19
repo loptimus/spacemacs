@@ -12,13 +12,14 @@
 (configuration-layer/declare-layers
  '(
    spacemacs-completion
+   spacemacs-editing
    ;; ivy
    helm
    auto-completion
    syntax-checking
    emacs-lisp
-   python
-   ;; my-python
+   ;; python
+   my-python
    graphviz
    my-erlang
    )

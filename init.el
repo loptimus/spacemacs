@@ -220,7 +220,7 @@ values."
    ;; Select a scope to highlight delimiters. Possible values are `any',
    ;; `current', `all' or `nil'. Default is `all' (highlight any scope and
    ;; emphasis the current one). (default 'all)
-   dotspacemacs-highlight-delimiters 'all
+   dotspacemacs-highlight-delimiters 'current
    ;; If non nil advises quit functions to keep server open when quitting.
    ;; (default nil)
    dotspacemacs-persistent-server nil
@@ -253,7 +253,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
           ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")))
 
   ;; 主题名称
-  (add-to-list 'custom-theme-load-path "~/.spacemacs.d/local/themes/monokai-emacs")  
+  (add-to-list 'custom-theme-load-path "~/.spacemacs.d/local/themes/monokai-emacs")
   )
 
 (defun dotspacemacs/user-config ()
@@ -265,20 +265,55 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   ;; (with-eval-after-load 'helm
   ;; (setq helm-display-function 'helm-default-display-buffer))
+
+  (setq display-time-24hr-format t)
+  (setq display-time-day-and-date t)
+  (setq display-time-format "%a(%V) %m.%d/%H:%M")
+  (display-time-mode t)
+
+  ;; Powerline
   (setq powerline-default-separator 'nil)
   (setq dotspacemacs-mode-line-unicode-symbols 'nil)
-  (setq yas-snippet-dirs
-        '("~/.spacemacs.d/snippets"                 ;; personal snippets
-          ))
+
+  ;; (setq-default mode-line-format
+  ;;               '(
+  ;;                 ;; "[" "%e"
+  ;;                 ;; (:eval (window-numbering-get-number-string))
+  ;;                 ;; "]"
+  ;;                 "%e"
+  ;;                 mode-line-front-space
+  ;;                 mode-line-mule-info
+  ;;                 mode-line-client
+  ;;                 mode-line-modified ;; -- show buffer change or not
+  ;;                 mode-line-remote   ;; -- no need to indicate this specially
+  ;;                 " " "%I" " "
+  ;;                 mode-line-position
+  ;;                 ;; mode-line-frame-identification -- this is for text-mode emacs only
+  ;;                 mode-line-buffer-identification
+  ;;                 ;; mode-name
+  ;;                 mode-line-modes
+  ;;                 (vc-mode vc-mode) " "
+  ;;                 ;; "[" minor-mode-alist "]" ;; -- move major-name above
+  ;;                 mode-line-misc-info
+  ;;                 ;; mode-line-end-spaces
+  ;;                 ))
+
+  ;; personal snippets
+  (setq yas-snippet-dirs '("~/.spacemacs.d/snippets"))
+
   ;; (使用4个空格代替Tab)
   (setq-default indent-tabs-mode nil)
   (setq-default tab-width 4)
+
   ;; 只读文件，快捷键F3控制
   (add-hook 'find-file-hooks 'make-some-files-read-only)
+
   ;; 括号匹配时显示另外一边的括号，而不是烦人的跳到另一个括号
   (show-paren-mode t)
   (setq show-paren-style 'parentheses)
   ;; 光标靠近鼠标指针时，让鼠标指针自动让开，别挡住视线
   ;; (mouse-avoidance-mode 'animate)
-  (undo-tree-keymap)
+
+  ;; 快捷键
+  ;; (undo-tree-keymap)
  )
