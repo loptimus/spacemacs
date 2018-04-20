@@ -31,7 +31,7 @@
 
 (defconst liwl-packages
   '(tabbar
-    powerline
+    ;; powerline
     indent-guide
     )
   "The list of Lisp packages required by the liwl layer.

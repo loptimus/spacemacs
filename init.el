@@ -271,32 +271,31 @@ you should place your code here."
   (setq display-time-format "%a(%V) %m.%d/%H:%M")
   (display-time-mode t)
 
-  ;; Powerline
-  (setq powerline-default-separator 'nil)
+  ;; mode line
   (setq dotspacemacs-mode-line-unicode-symbols 'nil)
-
-  ;; (setq-default mode-line-format
-  ;;               '(
-  ;;                 ;; "[" "%e"
-  ;;                 ;; (:eval (window-numbering-get-number-string))
-  ;;                 ;; "]"
-  ;;                 "%e"
-  ;;                 mode-line-front-space
-  ;;                 mode-line-mule-info
-  ;;                 mode-line-client
-  ;;                 mode-line-modified ;; -- show buffer change or not
-  ;;                 mode-line-remote   ;; -- no need to indicate this specially
-  ;;                 " " "%I" " "
-  ;;                 mode-line-position
-  ;;                 ;; mode-line-frame-identification -- this is for text-mode emacs only
-  ;;                 mode-line-buffer-identification
-  ;;                 ;; mode-name
-  ;;                 mode-line-modes
-  ;;                 (vc-mode vc-mode) " "
-  ;;                 ;; "[" minor-mode-alist "]" ;; -- move major-name above
-  ;;                 mode-line-misc-info
-  ;;                 ;; mode-line-end-spaces
-  ;;                 ))
+  (setq-default mode-line-format
+                '(
+                  ;; "[" "%e"
+                  ;; (:eval (window-numbering-get-number-string))
+                  ;; "]"
+                  "%e"
+                  mode-line-front-space
+                  mode-line-mule-info
+                  mode-line-client
+                  mode-line-modified ;; -- show buffer change or not
+                  mode-line-remote   ;; -- no need to indicate this specially
+                  " " "%I" " "
+                  mode-line-position
+                  ;; mode-line-frame-identification -- this is for text-mode emacs only
+                  mode-line-buffer-identification
+                  ;; mode-name
+                  mode-line-modes
+                  flycheck-mode-line
+                  (vc-mode vc-mode) " "
+                  ;; "[" minor-mode-alist "]" ;; -- move major-name above
+                  mode-line-misc-info
+                  ;; mode-line-end-spaces
+                  ))
 
   ;; personal snippets
   (setq yas-snippet-dirs '("~/.spacemacs.d/snippets"))

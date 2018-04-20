@@ -18,8 +18,8 @@
    auto-completion
    syntax-checking
    emacs-lisp
-   ;; python
-   my-python
+   python
+   ;; my-python
    graphviz
    my-erlang
    )
