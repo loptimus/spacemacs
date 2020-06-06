@@ -20,11 +20,11 @@
 ;; prevent annoying hang-on-compile
 ;(defvar inferior-erlang-prompt-timeout t)
 
-(add-hook 'erlang-shell-mode-hook
-   (lambda ()
-     ;; add some Distel bindings to the Erlang shell
-     (dolist (spec distel-shell-keys)
-       (define-key erlang-shell-mode-map (car spec) (cadr spec)))))
+;; (add-hook 'erlang-shell-mode-hook
+;;    (lambda ()
+;;      ;; add some Distel bindings to the Erlang shell
+;;      (dolist (spec distel-shell-keys)
+;;        (define-key erlang-shell-mode-map (car spec) (cadr spec)))))
 
 ;;========================= FlymakeErlang语法检查 =========================
 

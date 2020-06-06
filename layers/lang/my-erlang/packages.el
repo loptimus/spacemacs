@@ -32,8 +32,8 @@
 (defconst my-erlang-packages
   '(
     company
-    erlang
     flycheck
+    erlang
     )
   "The list of Lisp packages required by the my-erlang layer.
 
@@ -73,35 +73,36 @@ Each entry is either:
       (add-hook 'erlang-mode-hook 'spacemacs/run-prog-mode-hooks)
       (setq erlang-compile-extra-opts '(debug_info)))
     :config
-    (require 'erlang-start)))
-
-(defun my-erlang/post-init-erlang ()
-  "Init Distel"
-  (set-distel)
+    (progn
+      (require 'erlang-start)
+      (add-hook 'erlang-shell-mode-hook
+                (lambda ()
+                  ;; add some Distel bindings to the Erlang shell
+                  (dolist (spec distel-shell-keys)
+                    (define-key erlang-shell-mode-map (car spec) (cadr spec)))))
+      (set-distel)
+      )
+    )
   )
 
 (defun my-erlang/post-init-company ()
   (add-hook 'erlang-mode-hook 'company-mode))
 
-(defun my-erlang/post-init-flycheck () ""
-  (spacemacs/add-flycheck-hook 'erlang-mode)
-  ;; (spacemacs|diminish flycheck-mode " fc" " fc")
-  ;; (spacemacs|diminish auto-complete-mode " ac" " ac")
-  (setq flycheck-erlang-include-path
-      (append flycheck-erlang-include-path
-              '("inc" "../inc" "../../inc" "../../../inc"
-                "include" "../include" "../../include" "../../../include")))
-  (setq flycheck-erlang-library-path
-      (append flycheck-erlang-library-path
-              '("../ebin" "../../ebin" "../../../ebin")))
-  (setq flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+(defun my-erlang/post-init-flycheck ()
+  ""
+  (when (configuration-layer/package-usedp 'flycheck)
+    (spacemacs/enable-flycheck 'erlang-mode)
+    ;; (spacemacs|diminish flycheck-mode " fc" " fc")
+    ;; (spacemacs|diminish auto-complete-mode " ac" " ac")
+    (setq flycheck-erlang-include-path
+        (append flycheck-erlang-include-path
+                '("inc" "../inc" "../../inc" "../../../inc"
+                  "include" "../include" "../../include" "../../../include")))
+    (setq flycheck-erlang-library-path
+        (append flycheck-erlang-library-path
+                '("../ebin" "../../ebin" "../../../ebin")))
+    (setq flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list)
+    (setq flycheck-check-syntax-automatically '(save mode-enabled))
+    )
   )
-
-(defun erlang/post-init-ggtags ()
-  (add-hook 'erlang-mode-local-vars-hook #'spacemacs/ggtags-mode-enable))
-
-(defun erlang/post-init-helm-gtags ()
-  (spacemacs/helm-gtags-define-keys-for-mode 'erlang-mode))
-
 ;;; packages.el ends here
