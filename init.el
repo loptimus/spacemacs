@@ -10,14 +10,18 @@ values."
    ;; Base distribution to use. This is a layer contained in the directory
    ;; `+distribution'. For now available distributions are `spacemacs-base'
    ;; or `spacemacs'. (default 'spacemacs)
-   dotspacemacs-distribution 'spacemacs-base
+   dotspacemacs-distribution 'spacemacs
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
-   '(
+   '(sql
+     typescript
+     ;; rust
+     yaml
+     multiple-cursors
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -30,24 +34,27 @@ values."
      ;; chinese
      ;; markdown
      ;; org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
      ;; spell-checking
      ;; version-control
      liwl
+     ;; nyan-cat
+     ;; (colors :variables
+     ;;         colors-enable-nyan-cat-progress-bar (display-graphic-p))
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(exec-path-from-shell default-text-scale ace-jump-mode reveal-in-osx-finder)
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(company-tern)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
-   dotspacemacs-delete-orphan-packages t))
+   dotspacemacs-delete-orphan-packages nil))
 
 (defun dotspacemacs/init ()
   "Initialization function.
@@ -89,11 +96,11 @@ values."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner nil
    ;; List of items to show in the startup buffer. If nil it is disabled.
    ;; Possible values are: `recents' `bookmarks' `projects'.
    ;; (default '(recents projects))
-   dotspacemacs-startup-lists '(recents projects)
+   dotspacemacs-startup-lists '((recents  . 5) (projects  . 7) (agenda . 5) (todos . 5))
    ;; Number of recent files to show in the startup buffer. Ignored if
    ;; `dotspacemacs-startup-lists' doesn't include `recents'. (default 5)
    dotspacemacs-startup-recent-list-size 5
@@ -102,19 +109,22 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(monokai
+   dotspacemacs-themes '(
+                         doom-dracula
+                         monokai
+                         doom-one
                          spacemacs-dark
-                         spacemacs-light
                          solarized-light
                          solarized-dark
-                         leuven
-                         zenburn)
+                         )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Consolas"
-                               :size 16
+   dotspacemacs-default-font '(
+                               ;; "Menlo"
+                               "Monaco"
+                               :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 1.3)
@@ -162,7 +172,7 @@ values."
    ;; If non nil then `ido' replaces `helm' for some commands. For now only
    ;; `find-files' (SPC f f), `find-spacemacs-file' (SPC f e s), and
    ;; `find-contrib-file' (SPC f e c) are replaced. (default nil)
-   dotspacemacs-use-ido t
+   dotspacemacs-use-ido nil
    ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
    dotspacemacs-helm-resize nil
    ;; if non nil, the helm header is hidden when there is only one source.
@@ -185,7 +195,7 @@ values."
    ;; If non nil a progress bar is displayed when spacemacs is loading. This
    ;; may increase the boot time on some systems and emacs builds, set it to
    ;; nil to boost the loading time. (default t)
-   dotspacemacs-loading-progress-bar t
+   dotspacemacs-loading-progress-bar nil
    ;; If non nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
    dotspacemacs-fullscreen-at-startup nil
@@ -238,6 +248,11 @@ values."
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
    dotspacemacs-whitespace-cleanup 'changed
+
+   ;; server-start
+   ;; dotspacemacs-enable-server t
+   ;; dotspacemacs-server-socket-dir "~/.spacemacs.d/local/server"
+
    ))
 
 (defun dotspacemacs/user-init ()
@@ -247,14 +262,18 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  (setq configuration-layer--elpa-archives
-        '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
-          ("org-cn"   . "http://elpa.emacs-china.org/org/")
-          ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")))
+  ;; (setq configuration-layer-elpa-archives
+  ;;       '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
+  ;;         ("org-cn"   . "http://elpa.emacs-china.org/org/")
+  ;;         ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")))
 
-  ;; 主题名称
-  (add-to-list 'custom-theme-load-path "~/.spacemacs.d/local/themes/monokai-emacs")
-  )
+  (setq configuration-layer-elpa-archives
+    '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+      ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+      ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+      ("nongnu"   . "https://elpa.nongnu.org/nongnu/")
+      ))
+)
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -263,46 +282,50 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
   ;; (with-eval-after-load 'helm
   ;; (setq helm-display-function 'helm-default-display-buffer))
+  (setq gc-cons-threshold 402653184 gc-cons-percentage 0.6)
 
-  (setq display-time-24hr-format t)
-  (setq display-time-day-and-date t)
-  (setq display-time-format "%a(%V) %m.%d/%H:%M")
-  (display-time-mode t)
+  ;; (setq display-time-24hr-format t)
+  ;; (setq display-time-day-and-date t)
+  ;; (setq display-time-format "%a(%V) %m.%d/%H:%M")
+  ;; (display-time-mode t)
 
   ;; mode line
-  (setq dotspacemacs-mode-line-unicode-symbols 'nil)
-  (setq-default mode-line-format
-                '(
-                  ;; "[" "%e"
-                  ;; (:eval (window-numbering-get-number-string))
-                  ;; "]"
-                  "%e"
-                  mode-line-front-space
-                  mode-line-mule-info
-                  mode-line-client
-                  mode-line-modified ;; -- show buffer change or not
-                  mode-line-remote   ;; -- no need to indicate this specially
-                  " " "%I" " "
-                  mode-line-position
-                  ;; mode-line-frame-identification -- this is for text-mode emacs only
-                  mode-line-buffer-identification
-                  ;; mode-name
-                  mode-line-modes
-                  flycheck-mode-line
-                  (vc-mode vc-mode) " "
-                  ;; "[" minor-mode-alist "]" ;; -- move major-name above
-                  mode-line-misc-info
-                  ;; mode-line-end-spaces
-                  ))
+  ;; (setq-default mode-line-format
+  ;;               '(
+  ;;                 ;; "[" "%e"
+  ;;                 ;; (:eval (window-numbering-get-number-string))
+  ;;                 ;; "]"
+  ;;                 "%e"
+  ;;                 mode-line-front-space
+  ;;                 mode-line-mule-info
+  ;;                 mode-line-client
+  ;;                 mode-line-modified ;; -- show buffer change or not
+  ;;                 mode-line-remote   ;; -- no need to indicate this specially
+  ;;                 " " "%I" " "
+  ;;                 mode-line-position
+  ;;                 ;; mode-line-frame-identification -- this is for text-mode emacs only
+  ;;                 mode-line-buffer-identification
+  ;;                 ;; mode-name
+  ;;                 mode-line-modes
+  ;;                 flycheck-mode-line
+  ;;                 (vc-mode vc-mode) " "
+  ;;                 ;; "[" minor-mode-alist "]" ;; -- move major-name above
+  ;;                 mode-line-misc-info
+  ;;                 ;; mode-line-end-spaces
+  ;;                 ))
+
+  (setq tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
+  ;; markdown
+  (setq markdown-command "pandoc -f markdown -t html -s --mathjax --highlight-style pygments")
+
+  ;; 主题名称
+  ;; (add-to-list 'custom-theme-load-path "~/.spacemacs.d/local/themes/monokai-emacs")
 
   ;; personal snippets
   (setq yas-snippet-dirs '("~/.spacemacs.d/snippets"))
-
-  ;; (使用4个空格代替Tab)
-  (setq-default indent-tabs-mode nil)
-  (setq-default tab-width 4)
 
   ;; 只读文件，快捷键F3控制
   (add-hook 'find-file-hooks 'make-some-files-read-only)
@@ -310,9 +333,215 @@ you should place your code here."
   ;; 括号匹配时显示另外一边的括号，而不是烦人的跳到另一个括号
   (show-paren-mode t)
   (setq show-paren-style 'parentheses)
+
+  ;; 行号
+  (when (version<= "26.0.50" emacs-version )
+    (global-display-line-numbers-mode))
   ;; 光标靠近鼠标指针时，让鼠标指针自动让开，别挡住视线
-  ;; (mouse-avoidance-mode 'animate)
+  (mouse-avoidance-mode 'animate)
+
+  ;;  (setq python-shell-interpreter "python"
+  ;;        python-shell-interpreter-args "")
 
   ;; 快捷键
   ;; (undo-tree-keymap)
- )
+
+  ;; lsp
+  (use-package lsp-mode
+    :config
+    (setq lsp-auto-guess-root nil)
+    (setq company-lsp-cache-candidates t)
+    (setq company-lsp-async t)
+    ;; lsp-ui-imenu
+    (setq lsp-ui-imenu-enable t)
+
+    ;; lsp-ui-sideline
+    (setq lsp-ui-sideline-enable nil)
+
+    ;; lsp-ui-doc
+    (setq lsp-ui-doc-enable t)
+    (setq lsp-ui-doc-position 'bottom)
+    (setq lsp-ui-doc-delay 1)
+    (setq lsp-ui-doc-include-signature nil)
+
+    ;; lsp-ui-peek
+    (setq lsp-ui-peek-enable t)
+
+    ;; lsp-ui-flycheck
+    (setq lsp-ui-flycheck-enable t)
+    (setq lsp-prefer-flymake :none)
+    )
+
+  (with-eval-after-load 'lsp-mode
+    (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
+    (lsp-register-custom-settings
+     '(("gopls.completeUnimported" t t)
+       ("gopls.staticcheck" t t)))
+   )
+
+  ;; (when (memq window-system '(mac ns x))
+  ;;   (exec-path-from-shell-initialize))
+
+  ;; protobuf
+  (defconst my-protobuf-style
+    '(
+      (c-basic-offset . 2)
+      ;; (indent-tabs-mode . nil)
+      ))
+
+  (add-hook 'protobuf-mode-hook
+            (lambda ()
+              (setq flycheck-protoc-import-path '("." ".." "../pb"))
+              (c-add-style "my-style" my-protobuf-style t)))
+
+  ;; Dired
+  (with-eval-after-load 'dired
+    (setq dired-recursive-deletes 'always)
+    (setq dired-recursive-copies 'always)
+    (put 'dired-find-alternate-file 'disabled nil)
+    (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file))
+
+  ;; go mode
+  ;; (use-package go-mode
+  ;;   :config
+  ;;   (message "eval-after-load go mode ===")
+  ;;   (exec-path-from-shell-copy-env "GOPATH")
+  ;;   (exec-path-from-shell-copy-env "GOROOT")
+  ;;   (exec-path-from-shell-copy-env "GO111MODULE")
+  ;;   )
+
+  ;; project path settings
+  ;; (setq current-project-path (projectile-project-root))
+
+  ;; (defun set-project-path (relative-path)
+  ;;   (interactive
+  ;;    (list (read-string "relative path: " "." nil nil nil)))
+  ;;   (setq current-project-path (file-truename relative-path)))
+
+  ;; (defun get-project-path ()
+  ;;   (interactive)
+  ;;   (message current-project-path))
+
+  ;; (setq org-plantuml-jar-path
+  ;;       (expand-file-name "~/path/to/plantuml.jar"))
+
+  ;; active Org-babel languages
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(;; other Babel languages
+     (plantuml . t)))
+
+  (setq plantuml-jar-path
+        (expand-file-name "~/.spacemacs.d/local/plantuml.jar"))
+  (setq org-plantuml-jar-path
+        (expand-file-name "~/.spacemacs.d/local/plantuml.jar"))
+
+  ;; go build/install
+  ;; (setq default-go-package "")
+
+  ;; (defun go-build (&optional pkg)
+  ;;   (interactive
+  ;;    (list (read-string (format "Package Name[%s]: " default-go-package) nil nil "")))
+
+  ;;   (if (not (string= pkg ""))
+  ;;       (setq default-go-package pkg))
+
+  ;;   (if (string= current-project-path "")
+  ;;       (message "You MUST set current-project-path FIRST!")
+  ;;     (projectile-with-default-dir current-project-path
+  ;;       (projectile-run-compilation (concat "go build " default-go-package))))
+  ;;   )
+
+  ;; (defun go-install (&optional pkg)
+  ;;   (interactive
+  ;;    (list (read-string (format "Package Name[%s]: " default-go-package) nil nil "")))
+
+  ;;   (if (not (string= pkg ""))
+  ;;       (setq default-go-package pkg))
+
+  ;;   (if (string= current-project-path "")
+  ;;       (message "You MUST set current-project-path FIRST!")
+  ;;     (projectile-with-default-dir current-project-path
+  ;;       (projectile-run-compilation (concat "go install " default-go-package))))
+  ;;   )
+
+  ;; 默认全局使用
+  (projectile-global-mode)
+  (add-hook 'projectile-mode-hook
+            (lambda ()
+              ;; 默认打开缓存
+              (setq projectile-enable-caching t)
+              ;; 使用f5键打开默认文件搜索
+              (global-set-key [f5] 'projectile-find-file)))
+
+  (ansi-color-for-comint-mode-on)
+  (add-hook 'prog-mode-hook
+            (lambda () (setq fill-column 118)
+              (display-fill-column-indicator-mode)))
+
+  ;;(require 'mouse)
+  (xterm-mouse-mode nil)
+  ;;(defun track-mouse (e))
+  ;;(setq mouse-sel-mode t)
+
+  ;; (add-to-list 'load-path "~/.emacs.d/private/local/")
+  ;; (require 'find-file-in-project)
+
+  (setq org-default-notes-file (concat org-directory "~/workspace/docs/notes.org"))
+
+  (with-eval-after-load 'ox-latex
+    (add-to-list 'org-latex-classes
+                 '("ctexart" "\\documentclass[11pt]{ctexart}"
+                   ("\\section{%s}" . "\\section*{%s}")
+                   ("\\subsection{%s}" . "\\subsection*{%s}")
+                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+    (setq org-latex-default-class "ctexart")
+    (setq org-latex-compiler "xelatex"))
+
+  (with-eval-after-load 'org
+    (add-to-list 'org-export-backends 'md))
+
+  ;; (使用4个空格代替Tab)
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 4)
+
+  (add-hook 'go-mode-hook
+            (lambda ()
+              (setq tab-width 4)
+              (setq indent-tabs-mode nil)))
+)
+
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol t)
+ '(eww-search-prefix "https://cn.bing.com/search?q=")
+ '(go-use-test-args "-v -timeout 10s -tags=beta")
+ '(gofmt-command "goimports")
+ '(lsp-enable-file-watchers nil)
+ '(lsp-go-build-flags ["-tags=beta"])
+ '(lsp-go-directory-filters
+   ["-/Users/lwl/workspace/go/src/mizhua/server/src/common" "-/Users/lwl/workspace/go/src/mizhua/server/src/common/auto"])
+ '(lsp-go-library-directories '("/opt/goroot"))
+ '(org-export-backends '(ascii html icalendar latex md odt))
+ '(package-selected-packages
+   '(go-playground sqlup-mode sql-indent git-modes git reveal-in-osx-finder typescript-mode import-js grizzl ace-jump-mode toml-mode ron-mode racer rust-mode helm-gtags helm helm-core ggtags flycheck-rust counsel-gtags cargo yaml-mode yasnippet-snippets yapfify ws-butler writeroom-mode winum which-key wgrep web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired toc-org tagedit symon symbol-overlay string-inflection string-edit sphinx-doc spaceline-all-the-icons solarized-theme smex smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters quickrun pytest pyenv-mode py-isort pug-mode protobuf-mode prettier-js popwin poetry plantuml-mode pippel pipenv pip-requirements pcre2el password-generator paradox overseer org-superstar open-junk-file npm-mode nose nodejs-repl nameless multi-line monokai-theme mmm-mode markdown-toc macrostep lsp-ui lsp-python-ms lsp-pyright lsp-origami lsp-ivy lorem-ipsum livid-mode live-py-mode link-hint json-navigator json-mode js2-refactor js-doc ivy-yasnippet ivy-xref ivy-rtags ivy-purpose ivy-hydra ivy-avy indent-guide importmagic impatient-mode hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-make google-translate google-c-style golden-ratio godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy forge font-lock+ flycheck-ycmd flycheck-rtags flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu erlang emr emmet-mode elisp-slime-nav ein editorconfig dumb-jump drag-stuff dotenv-mode doom-themes disaster dired-quick-sort diminish define-word default-text-scale dap-mode cython-mode cpp-auto-include counsel-projectile counsel-css company-ycmd company-web company-rtags company-go company-c-headers company-anaconda column-enforce-mode clean-aindent-mode centered-cursor-mode ccls blacken auto-yasnippet auto-highlight-symbol auto-compile async aggressive-indent ace-link ac-ispell))
+ '(savehist-autosave-interval 300)
+ '(savehist-mode nil)
+ '(xterm-mouse-mode nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(highlight-parentheses-highlight ((nil (:weight ultra-bold))) t))
+)

@@ -30,9 +30,10 @@
 ;;; Code:
 
 (defconst liwl-packages
-  '(tabbar
+  '(
+    ;; tabbar
     ;; powerline
-    indent-guide
+    ;; indent-guide
     )
   "The list of Lisp packages required by the liwl layer.
 

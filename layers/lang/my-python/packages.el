@@ -77,7 +77,8 @@ Each entry is either:
   (add-hook 'python-mode-hook 'company-mode))
 
 (defun my-python/post-init-flycheck () ""
-       (spacemacs/add-flycheck-hook 'python-mode)
+       ;; (spacemacs/add-flycheck-hook 'python-mode)
+       (spacemacs/enable-flycheck 'python-mode)
        (setq flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list)
        (setq flycheck-check-syntax-automatically '(save mode-enabled))
        )

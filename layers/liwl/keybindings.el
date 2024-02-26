@@ -12,6 +12,9 @@
 
 ; 只读开关
 (global-set-key (kbd "<f3>")  'read-only-mode)
+;; (global-set-key (kbd "<f4>")  'helm-do-ag-project-root)
+(global-set-key (kbd "<f4>")  'counsel-ag)
+(global-set-key (kbd "<f5>")  'projectile-find-file)
 
 ;; 行复制
 (global-set-key (kbd "C-c w") 'copy-lines)
@@ -45,6 +48,12 @@
   (global-set-key (kbd "C-z")  'undo-tree-undo)
   (global-set-key (kbd "C-M-z")  'undo-tree-redo)
   )
+
+(eval-after-load 'go-mode
+  '(define-key go-mode-map (kbd "M-.") 'lsp-find-definition)
+  ;; '(define-key go-mode-map (kbd "M-.") #'godef-jump)
+  )
+;; (define-key m (kbd "C-c C-j") #'godef-jump)
 
 
 ;(defun tabbar-keymap ()

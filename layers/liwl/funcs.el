@@ -44,7 +44,7 @@
 ;;; Default only Read （默认指定为只读模式）
 (defun make-some-files-read-only ()
   "when file opened is of a certain mode, make it read only"
-  (when (memq major-mode '(c-mode c++-mode erlang-mode php-mode python-mode lua-mode emacs-lisp-mode))
+  (when (not (memq major-mode '(emacs-lisp-mode org-mode)))
     (toggle-read-only 1)))
 
 ;;; 行复制
@@ -59,3 +59,55 @@
     (kill-ring-save (mark) (point))
     )
   )
+
+;; GOLANG
+;; GOPATH相关配置
+(setq default-gopath (getenv "GOPATH"))
+(setq current-gopath "")
+
+;; (defun set-gopath (relative-path)
+;;   (interactive
+;;    (list (read-string "relative path: " "." nil nil nil)))
+;;   (setq current-gopath (file-truename relative-path))
+;;   (setenv "GOPATH" (concat current-gopath  ":" (getenv "GOPATH")))
+;;   (exec-path-from-shell-copy-env "GOPATH")
+;;   )
+
+(defun set-current-gopath (project)
+  (interactive
+   (list (read-string "relative path: " "mizhua" nil nil nil)))
+  (cond
+   ((equal project "mizhua") (setq project-path "/Users/lwl/workspace/go/src/mizhua/server:/Users/lwl/workspace/go/src/mizhua/server/vendor"))
+   ((equal project "plugin") (setq project-path "/Users/lwl/workspace/go/src/mizhua/plugin_srv:/User/lwl/workspace/go/src/mizhua/plugin_srv/vendor"))
+   ((equal project "club") (setq project-path "/Users/lwl/workspace/go/src/mizhua/club_sys:/User/lwl/workspace/go/src/mizhua/club_sys/vendor"))
+   ((equal project "xhx") (setq project-path "/Users/lwl/workspace/go/src/xhx/server:/User/lwl/workspace/go/src/xhx/server/vendor"))
+   (t (setq project-path ""))
+   )
+  (setenv "GOPATH" (concat (getenv "GOPATH") ":" project-path))
+  ;; (exec-path-from-shell-copy-env "GOPATH")
+  )
+
+(defun get-gopath ()
+  (interactive)
+  (message (getenv "GOPATH")))
+
+(defun reset-gopath ()
+  (interactive)
+  (setenv "GOPATH" default-gopath)
+  (setq current-gopath ""))
+
+;; 编译配置
+; (setq default-go-package "")
+
+; (defun go-install (&optional pkg)
+;  (interactive
+;   (list (read-string (format "Package Name[%s]: " default-go-package) nil nil "")))
+
+;  (if (not (string= pkg ""))
+;      (setq default-go-package pkg))
+
+;  (projectile-with-default-dir current-gopath
+;    (projectile-run-compilation (concat "export GOPATH=" current-gopath " && " "go install" " " default-go-package))))
+
+; (spacemacs/set-leader-keys-for-major-mode 'go-mode
+;  "gi" 'go-install)
