@@ -8,14 +8,17 @@
 (defvar flycheck-erlang-library-path nil
   "Erlang依赖目录")
 
-(setq erlang-root-path "~/workspace/opt/erlang/r19b03")
+(setq erlang-root-path "/opt/homebrew/Cellar/erlang@24/24.3.4.13")
 (setq erlang-root-dir erlang-root-path)
 (setq exec-path (cons (concat erlang-root-path "/bin") exec-path))
 (setq erlang-man-root-dir (concat erlang-root-path "/man"))
 
 ;; Distel
 ; (setq erlang-distel-path "~/.spacemacs.d/layers/lang/my-erlang/local/distel-4.03/elisp")
-(setq erlang-distel-path "~/.spacemacs.d/layers/lang/my-erlang/local/distel/elisp")
+;; (setq erlang-distel-path "~/.spacemacs.d/layers/lang/my-erlang/local/distel/elisp")
+(setq erlang-distel-path "~/.spacemacs.d/layers/lang/my-erlang/local/distel-git/elisp")
+
+(add-to-list 'load-path "/opt/homebrew/Cellar/erlang@24/24.3.4.13/lib/erlang/lib/tools-3.5.2/emacs")
 
 ;; Erlang Cookie
 (setq derl-cookie "k35bz75vc881x")
@@ -78,6 +81,8 @@
         ;; pretty much anywhere without having to muck with NetInfo
         ;; ... but I only tested it on Mac OS X.
         (car (split-string (shell-command-to-string "hostname"))))))
+
+(setq distel-big-creation t)
 
 ;; A number of the erlang-extended-mode key bindings are useful in the shell too
 (defconst distel-shell-keys

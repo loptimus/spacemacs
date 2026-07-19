@@ -1,30 +1,58 @@
 #+TITLE: liwl layer
 
-# The maximum height of the logo should be 200 pixels.
-[[img/liwl.png]]
-
-# TOC links should be GitHub style anchors.
-* Table of Contents                                        :TOC_4_gh:noexport:
-- [[#description][Description]]
-- [[#install][Install]]
-- [[#key-bindings][Key bindings]]
-
 * Description
-This layer does wonderful things:
-  - thing01
+Personal Spacemacs private layer.  All non-trivial configuration is composed
+of small topic modules under =modules/=.
+
+* File layout
+| File                    | Responsibility                                          |
+|-------------------------+---------------------------------------------------------|
+| =layers.el=             | Declare official Spacemacs layers (languages, tools)    |
+| =packages.el=           | Extra packages (currently empty; extras live in init.el =dotspacemacs-additional-packages=) |
+| =config.el=             | Aggregator: =require= topic modules in load order       |
+| =funcs.el=              | Reusable helper functions                               |
+| =keybindings.el=        | Global key bindings (Emacs style)                       |
+| =modules/mac.el=        | macOS: =exec-path-from-shell=, TRAMP                    |
+| =modules/lsp.el=        | lsp-mode / lsp-ui / gopls / projectile / protobuf hook  |
+| =modules/ui.el=         | doom-modeline, fonts, whitespace, dired, yas, indent    |
+| =modules/writing.el=    | markdown, org, plantuml, ox-latex                       |
+| =modules/ai.el=         | agent-shell (Claude Code / Codex / Gemini)              |
+
+* Adding a new topic
+1. Create =modules/<topic>.el= ending with =(provide 'liwl-<topic>)=.
+2. Append =(require 'liwl-<topic>)= to =config.el= in the desired load order.
+3. Restart Emacs.  No changes to =init.el= are needed.
+
+The load order matters:
+=mac= → =lsp= → =ui= → =writing= → =ai=.  Shell PATH must be inherited before
+LSP servers spawn; UI runs after LSP so mode-line reflects LSP state; AI is
+last and defensively deferred so its dependencies never block startup.
 
 * Install
-To use this configuration layer, add it to your =~/.spacemacs=. You will need to
-add =liwl= to the existing =dotspacemacs-configuration-layers= list in this
-file.
+Add =liwl= to =dotspacemacs-configuration-layers= in your =init.el=.
+
+External dependencies (macOS, one-off):
+
+#+BEGIN_SRC sh
+# Icon fonts for doom-modeline
+M-x all-the-icons-install-fonts
+
+# AI agent CLIs (only needed to actually use the AI layer)
+npm i -g @zed-industries/claude-code-acp
+npm i -g @agentclientprotocol/codex-acp
+# Gemini CLI: install per Google docs, ensure --experimental-acp works
+#+END_SRC
 
 * Key bindings
-
-| Key Binding | Description    |
-|-------------+----------------|
-| ~SPC x x x~ | Does thing01   |
-# Use GitHub URLs if you wish to link a Spacemacs documentation file or its heading.
-# Examples:
-# [[https://github.com/syl20bnr/spacemacs/blob/master/doc/VIMUSERS.org#sessions]]
-# [[https://github.com/syl20bnr/spacemacs/blob/master/layers/%2Bfun/emoji/README.org][Link to Emoji layer README.org]]
-# If space-doc-mode is enabled, Spacemacs will open a local copy of the linked file.
+| Key Binding | Description                                    |
+|-------------+------------------------------------------------|
+| =C-c p=     | Copy absolute file path with line number       |
+| =C-c P=     | Copy project-relative file path with line      |
+| =C-c w=     | Copy current line to kill ring                 |
+| =C-S-f=     | =counsel-rg= (project-wide ripgrep search)     |
+| =C-;=       | ace-jump-mode                                  |
+| =C-x SPC=   | ace-jump-mode pop mark                         |
+| =SPC a a=   | agent-shell (choose agent)                     |
+| =SPC a c=   | Start Claude Code agent                        |
+| =SPC a x=   | Start Codex agent                              |
+| =SPC a g=   | Start Gemini agent                             |

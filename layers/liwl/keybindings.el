@@ -1,59 +1,65 @@
+;;; keybindings.el --- Global key bindings for liwl layer -*- lexical-binding: t -*-
 
-(global-set-key (kbd "<f1>") 'manual-entry)
-
-; 显示Emacs info
+;; Help / info
+(global-set-key (kbd "<f1>")   'manual-entry)
 (global-set-key (kbd "S-<f1>") 'info)
 
-; f3为查找字符串
-(global-set-key (kbd "C-6") 'grep-find)
+;; Search
+(global-set-key (kbd "C-6")   'grep-find)
+(global-set-key (kbd "C-S-f") 'counsel-rg)
+(global-set-key (kbd "<f5>")  'projectile-find-file)
 
-; Mark set
-(global-set-key (kbd "M-SPC")  'set-mark-command)
+;; Mark
+(global-set-key (kbd "M-SPC") 'set-mark-command)
 
-; 只读开关
-(global-set-key (kbd "<f3>")  'read-only-mode)
+;; Read-only toggle
+(global-set-key (kbd "<f3>") 'read-only-mode)
 
-;; 行复制
+;; Line copy
 (global-set-key (kbd "C-c w") 'copy-lines)
-; (global-set-key (kbd "C-c w") 'evil-copy)
 
-; Etags jump back
-(global-set-key (kbd "M-[") 'find-tag)
-(global-set-key (kbd "M-]") 'pop-tag-mark)
+;; File path copy
+(global-set-key (kbd "C-c p") 'copy-file-path-with-line)
+(global-set-key (kbd "C-c P") 'copy-relative-file-path-with-line)
 
-; 书签列表
-(global-set-key (kbd "M-8") 'list-bookmarks)
-(global-set-key (kbd "<f2>") 'bookmark-set)
-(global-set-key (kbd "S-<f2>") 'bookmark-jump)
-(global-set-key (kbd "M-<f2>") 'bookmark-delete)
+;; Bookmarks
+(global-set-key (kbd "M-8")     'list-bookmarks)
+(global-set-key (kbd "<f2>")    'bookmark-set)
+(global-set-key (kbd "S-<f2>")  'bookmark-jump)
+(global-set-key (kbd "M-<f2>")  'bookmark-delete)
 
-; gdb调试
+;; GDB
 (global-set-key (kbd "C-4") 'gdb)
 
-; Switch windows
-(global-set-key [M-left] 'windmove-left)
+;; Window movement
+(global-set-key [M-left]  'windmove-left)
 (global-set-key [M-right] 'windmove-right)
-(global-set-key [M-up] 'windmove-up)
-(global-set-key [M-down] 'windmove-down)
+(global-set-key [M-up]    'windmove-up)
+(global-set-key [M-down]  'windmove-down)
 
-;;显示/隐藏工具栏，方便调试
+;; Tool-bar toggle for debugging
 (global-set-key (kbd "C-9") 'tool-bar-mode)
 
-;; undo-tree
+;; Undo-tree helper (invoked from modules if desired)
 (defun undo-tree-keymap ()
-  ""
-  (global-set-key (kbd "C-z")  'undo-tree-undo)
-  (global-set-key (kbd "C-M-z")  'undo-tree-redo)
-  )
+  "Bind undo-tree keys."
+  (global-set-key (kbd "C-z")   'undo-tree-undo)
+  (global-set-key (kbd "C-M-z") 'undo-tree-redo))
 
+;; ace-jump: register lazy-loaded bindings
+(autoload 'ace-jump-mode-pop-mark "ace-jump-mode" "Ace jump back" t)
+(with-eval-after-load 'ace-jump-mode
+  (ace-jump-mode-enable-mark-sync))
+(define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
+(define-key global-map (kbd "C-;")     'ace-jump-mode)
 
-;(defun tabbar-keymap ()
-;	"tabbar keymap"
-;	(global-set-key (kbd "M-h") 'tabbar-backward)
-;	(global-set-key (kbd "M-l") 'tabbar-forward)
-;	; 分组选择
-;	(global-set-key (kbd "M-u") 'tabbar-backward-group)
-;	(global-set-key (kbd "M-i") 'tabbar-forward-group)
-;)
-;
+;; AI agent leader (SPC a *) — registered when agent-shell is available.
+(with-eval-after-load 'agent-shell
+  (spacemacs/declare-prefix "a" "ai")
+  (spacemacs/set-leader-keys
+    "aa" 'agent-shell
+    "ac" 'agent-shell-anthropic-start-claude-code
+    "ax" 'agent-shell-openai-start-codex
+    "ag" 'agent-shell-google-start-gemini))
 
+;;; keybindings.el ends here
