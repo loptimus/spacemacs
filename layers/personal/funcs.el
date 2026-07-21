@@ -1,4 +1,4 @@
-;;; funcs.el --- liwl layer utility functions -*- lexical-binding: t -*-
+;;; funcs.el --- personal layer utility functions -*- lexical-binding: t -*-
 
 (defun make-some-files-read-only ()
   "Open non-elisp / non-org files in read-only mode by default."

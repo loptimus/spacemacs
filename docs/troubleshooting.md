@@ -2,13 +2,13 @@
 
 ## 启动阶段
 
-### `Cannot open load file: liwl-mac`（或其他 liwl 模块）
+### `Cannot open load file: personal-mac`（或其他 personal 模块）
 
-**原因**：`layers/liwl/modules/` 不在 `load-path`，或文件名与 `provide` 特性名不一致。
+**原因**：`layers/personal/modules/` 不在 `load-path`，或文件名与 `provide` 特性名不一致。
 
 **排查**：
-1. 确认文件名是 `liwl-mac.el`，不是 `mac.el`（Emacs `require 'liwl-mac` 会查找 `liwl-mac.el`）
-2. 看 `*Messages*` 顶部有没有 `[liwl] loading modules from …` 这一行，路径对不对
+1. 确认文件名是 `personal-mac.el`，不是 `mac.el`（Emacs `require 'personal-mac` 会查找 `personal-mac.el`）
+2. 看 `*Messages*` 顶部有没有 `[personal] loading modules from …` 这一行，路径对不对
 3. `M-: load-path RET` 检查 `modules/` 是否在里面
 
 ### GUI 里 `M-: (getenv "PATH")` 缺 brew/gvm 路径
@@ -63,7 +63,7 @@ done
 ### mode line 没有 `Envrc[+]`
 
 1. `M-: (featurep 'envrc) RET` → `nil` 说明包没装或 hook 没挂
-2. 检查 `liwl-mac.el` 里是 `(add-hook 'prog-mode-hook #'envrc-mode)`，**不要**包 `with-eval-after-load 'envrc`（envrc 是 lazy-load，包一层会永不触发）
+2. 检查 `personal-mac.el` 里是 `(add-hook 'prog-mode-hook #'envrc-mode)`，**不要**包 `with-eval-after-load 'envrc`（envrc 是 lazy-load，包一层会永不触发）
 3. `M-x envrc-mode` 手动开一次；若报错说 direnv 未装 → `brew install direnv`
 
 ### `command not found: go`（在 Emacs 起子进程时）
@@ -107,7 +107,7 @@ rm ~/Library/Fonts/{all-the-icons,fontawesome,file-icons,material-design-icons,o
 
 ### `(length agent-shell-agent-configs)` 为 0
 
-之前 `liwl-ai.el` 里的 filter 匹配错了。当前版本已删除过滤，保留 agent-shell 的默认配置。
+之前 `personal-ai.el` 里的 filter 匹配错了。当前版本已删除过滤，保留 agent-shell 的默认配置。
 
 ### `SPC a c` 报找不到 CLI
 
@@ -120,7 +120,7 @@ npm i -g @agentclientprotocol/codex-acp
 
 ## 其他
 
-### `[yas] Check your yas-snippet-dirs: /Users/lwl/.spacemacs.d/snippets is not a directory`
+### `[yas] Check your yas-snippet-dirs: $HOME/.spacemacs.d/snippets is not a directory`
 
 建目录即可：
 

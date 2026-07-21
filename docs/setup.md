@@ -20,7 +20,19 @@ git clone <this-repo> ~/.spacemacs.d
 ln -s ~/spacemacs ~/.spacemacs.d
 ```
 
-## 3. 系统依赖（macOS）
+## 3. 本机变量
+
+需要个人目录或非标准工具路径时，创建 Git 忽略的本机设置文件：
+
+```bash
+cp local/user-settings.example.el local/user-settings.el
+```
+
+该文件在所有 layer 之前加载，目前支持 `personal-org-agenda-files` 和
+`my-erlang-root-path`。工具能从 shell `PATH` 找到时不要设置安装路径；项目专属
+环境放在项目的 `.envrc`。
+
+## 4. 系统依赖（macOS）
 
 ```bash
 brew install direnv ripgrep coreutils go rust node python
@@ -30,7 +42,7 @@ brew install gvm nvm pyenv
 
 `direnv` 是必需，`envrc` 靠它注入项目环境。`ripgrep` 是 `C-S-f` 的项目搜索后端。
 
-## 4. Shell 环境
+## 5. Shell 环境
 
 `~/.zshenv`（不是 `.zshrc`）里 export 你希望 GUI Emacs 也能看到的变量：
 
@@ -41,11 +53,11 @@ export EMACS_PATH="/Applications/Emacs.app/Contents/MacOS"
 
 其他 `PATH` 相关（gvm / nvm / pyenv 的 init）留在 `.zshrc` 即可，Emacs 里的 `exec-path-from-shell` 会启动一个 `zsh -l -i` 抓走。
 
-## 5. 首次启动
+## 6. 首次启动
 
 启动 Emacs，Spacemacs 会自动装 `dotspacemacs-additional-packages` 里声明的包（含 `doom-modeline` / `envrc` / `agent-shell` / `acp` / `shell-maker` 等）。
 
-## 6. 字体（一次性）
+## 7. 字体（一次性）
 
 `doom-modeline` 依赖 nerd-icons：
 
@@ -55,7 +67,7 @@ M-x nerd-icons-install-fonts
 
 装完**完全退出** Emacs 再启动（不是 `restart-emacs`，字体缓存要重建），mode line 图标就正常了。
 
-## 7. AI Agent CLI（一次性）
+## 8. AI Agent CLI（一次性）
 
 ```bash
 npm i -g @zed-industries/claude-code-acp
@@ -65,7 +77,7 @@ npm i -g @agentclientprotocol/codex-acp
 
 装完在 Emacs 里 `SPC a c` / `SPC a x` / `SPC a g` 分别启动 Claude Code / Codex / Gemini。
 
-## 8. direnv 授权
+## 9. direnv 授权
 
 对每个用 `.envrc` 的项目，第一次需要在**终端**里执行一次 `direnv allow` 才生效：
 
@@ -74,7 +86,7 @@ cd ~/workspace/projects/your-project
 direnv allow
 ```
 
-## 9. 验证清单
+## 10. 验证清单
 
 在 Finder / Dock 里启动 Emacs（不要从终端），跑：
 

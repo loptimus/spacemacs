@@ -1,4 +1,4 @@
-;;; liwl-ai.el --- AI agent integrations -*- lexical-binding: t -*-
+;;; personal-ai.el --- AI agent integrations -*- lexical-binding: t -*-
 ;;
 ;; agent-shell (ACP client) drives multiple agent CLIs via a shared UI:
 ;;   - Claude Code   (npm i -g @zed-industries/claude-code-acp)
@@ -21,7 +21,7 @@
       ;; No filter for now; add per-machine tweaks here if needed.
       nil)
   (error
-   (message "[liwl-ai] agent-shell setup skipped: %S" err)))
+   (message "[personal-ai] agent-shell setup skipped: %S" err)))
 
-(provide 'liwl-ai)
-;;; liwl-ai.el ends here
+(provide 'personal-ai)
+;;; personal-ai.el ends here

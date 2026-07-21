@@ -1,4 +1,4 @@
-;;; keybindings.el --- Global key bindings for liwl layer -*- lexical-binding: t -*-
+;;; keybindings.el --- Global key bindings for personal layer -*- lexical-binding: t -*-
 
 ;; Help / info
 (global-set-key (kbd "<f1>")   'manual-entry)

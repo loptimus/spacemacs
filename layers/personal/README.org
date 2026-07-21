@@ -1,4 +1,4 @@
-#+TITLE: liwl layer
+#+TITLE: personal layer
 
 * Description
 Personal Spacemacs private layer.  All non-trivial configuration is composed
@@ -12,15 +12,15 @@ of small topic modules under =modules/=.
 | =config.el=             | Aggregator: =require= topic modules in load order       |
 | =funcs.el=              | Reusable helper functions                               |
 | =keybindings.el=        | Global key bindings (Emacs style)                       |
-| =modules/mac.el=        | macOS: =exec-path-from-shell=, TRAMP                    |
-| =modules/lsp.el=        | lsp-mode / lsp-ui / gopls / projectile / protobuf hook  |
-| =modules/ui.el=         | doom-modeline, fonts, whitespace, dired, yas, indent    |
-| =modules/writing.el=    | markdown, org, plantuml, ox-latex                       |
-| =modules/ai.el=         | agent-shell (Claude Code / Codex / Gemini)              |
+| =modules/personal-mac.el=     | macOS: =exec-path-from-shell=, TRAMP                    |
+| =modules/personal-lsp.el=     | lsp-mode / lsp-ui / gopls / projectile / protobuf hook  |
+| =modules/personal-ui.el=      | doom-modeline, fonts, whitespace, dired, yas, indent    |
+| =modules/personal-writing.el= | markdown, org, plantuml, ox-latex                       |
+| =modules/personal-ai.el=      | agent-shell (Claude Code / Codex / Gemini)              |
 
 * Adding a new topic
-1. Create =modules/<topic>.el= ending with =(provide 'liwl-<topic>)=.
-2. Append =(require 'liwl-<topic>)= to =config.el= in the desired load order.
+1. Create =modules/personal-<topic>.el= ending with =(provide 'personal-<topic>)=.
+2. Append =(require 'personal-<topic>)= to =config.el= in the desired load order.
 3. Restart Emacs.  No changes to =init.el= are needed.
 
 The load order matters:
@@ -29,7 +29,7 @@ LSP servers spawn; UI runs after LSP so mode-line reflects LSP state; AI is
 last and defensively deferred so its dependencies never block startup.
 
 * Install
-Add =liwl= to =dotspacemacs-configuration-layers= in your =init.el=.
+Add =personal= to =dotspacemacs-configuration-layers= in your =init.el=.
 
 External dependencies (macOS, one-off):
 

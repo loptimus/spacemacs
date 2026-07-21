@@ -93,7 +93,7 @@
 
 ## 添加新键位
 
-在 `layers/liwl/keybindings.el` 里加。全局键用 `global-set-key`；带 leader 前缀的用 Spacemacs 的 `spacemacs/set-leader-keys`。
+在 `layers/personal/keybindings.el` 里加。全局键用 `global-set-key`；带 leader 前缀的用 Spacemacs 的 `spacemacs/set-leader-keys`。
 
 例如给 leader `SPC o t` 绑一个自定义命令：
 

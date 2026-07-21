@@ -1,3 +1,4 @@
 .spacemacs.env
+local/user-settings.el
 .claude/*
 .codex/*

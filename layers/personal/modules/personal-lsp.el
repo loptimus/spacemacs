@@ -1,4 +1,4 @@
-;;; lsp.el --- LSP / projectile / language tooling tuning -*- lexical-binding: t -*-
+;;; personal-lsp.el --- LSP / projectile / language tooling tuning -*- lexical-binding: t -*-
 
 ;; ---------------------------------------------------------------------------
 ;; Global runtime tuning (safe to set unconditionally)
@@ -91,14 +91,14 @@
 ;; ---------------------------------------------------------------------------
 ;; protobuf: use a small local style and register flycheck import paths
 ;; ---------------------------------------------------------------------------
-(defconst liwl-protobuf-style
+(defconst personal-protobuf-style
   '((c-basic-offset . 2))
   "Local protobuf style used by protobuf-mode buffers.")
 
 (add-hook 'protobuf-mode-hook
           (lambda ()
             (setq flycheck-protoc-import-path '("." ".." "../pb"))
-            (c-add-style "liwl-protobuf" liwl-protobuf-style t)))
+            (c-add-style "personal-protobuf" personal-protobuf-style t)))
 
-(provide 'liwl-lsp)
-;;; lsp.el ends here
+(provide 'personal-lsp)
+;;; personal-lsp.el ends here

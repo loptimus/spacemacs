@@ -1,6 +1,11 @@
-# Private directory for local packages
+# Local files
 
-The content of this directory is ignored by Git.
+This directory contains both tracked repository assets and ignored
+machine-specific settings.
 
-This is the place to store the local packages that you define in
-the `dotspacemacs-additional-packages` variable of your dotfile.
+- `user-settings.example.el` documents the supported local variables.
+- `user-settings.el` contains values for the current machine and is ignored by
+  Git.
+
+Other files in this directory are not ignored automatically. Check `git status`
+before adding local packages or generated assets.

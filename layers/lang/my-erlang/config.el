@@ -1,5 +1,5 @@
 
-;; Erlang Path
+;; Erlang path
 (spacemacs|define-jump-handlers erlang-mode)
 
 (defvar flycheck-erlang-include-path nil
@@ -8,22 +8,25 @@
 (defvar flycheck-erlang-library-path nil
   "Erlang依赖目录")
 
-(setq erlang-root-path "/opt/homebrew/Cellar/erlang@24/24.3.4.13")
-(setq erlang-root-dir erlang-root-path)
-(setq exec-path (cons (concat erlang-root-path "/bin") exec-path))
-(setq erlang-man-root-dir (concat erlang-root-path "/man"))
+(defvar my-erlang-root-path nil
+  "Optional Erlang installation root; nil discovers erl from PATH.")
 
-;; Distel
-; (setq erlang-distel-path "~/.spacemacs.d/layers/lang/my-erlang/local/distel-4.03/elisp")
-;; (setq erlang-distel-path "~/.spacemacs.d/layers/lang/my-erlang/local/distel/elisp")
-(setq erlang-distel-path "~/.spacemacs.d/layers/lang/my-erlang/local/distel-git/elisp")
+(when my-erlang-root-path
+  (setq erlang-root-path (file-name-as-directory
+                          (expand-file-name my-erlang-root-path)))
+  (setq erlang-root-dir erlang-root-path)
+  (add-to-list 'exec-path (expand-file-name "bin" erlang-root-path))
+  (setq erlang-man-root-dir (expand-file-name "man" erlang-root-path)))
 
-(add-to-list 'load-path "/opt/homebrew/Cellar/erlang@24/24.3.4.13/lib/erlang/lib/tools-3.5.2/emacs")
+;; Distel is provided by this layer's submodule.
+(setq erlang-distel-path
+      (expand-file-name "distel/elisp"
+                        (configuration-layer/get-layer-local-dir 'my-erlang)))
 
-;; Erlang Cookie
-(setq derl-cookie "k35bz75vc881x")
-
-(defvar inferior-erlang-machine (concat erlang-root-path "/bin/" "erl")
+(defvar inferior-erlang-machine
+  (if my-erlang-root-path
+      (expand-file-name "bin/erl" my-erlang-root-path)
+    (or (executable-find "erl") "erl"))
   "The name of the Erlang shell.")
 
 ;; (defvar inferior-erlang-display-buffer-any-frame nil
@@ -68,9 +71,6 @@
 
 ;; Refactorerl
 ;; (defvar refactorerlPath "~/.emacs.d/lisp/erlang/refactorerl")
-
-;; Wrangler
-;; (defvar wranglerPath "D:/Program Files/Wrangler")
 
 ;; tell distel to default to that node
 (setq erl-nodename-cache

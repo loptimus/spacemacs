@@ -1,4 +1,4 @@
-;;; mac.el --- macOS platform-specific settings -*- lexical-binding: t -*-
+;;; personal-mac.el --- macOS platform-specific settings -*- lexical-binding: t -*-
 ;;
 ;; Shell PATH inheritance for GUI Emacs and TRAMP tweaks.
 
@@ -21,5 +21,5 @@
 (when (executable-find "direnv")
   (add-hook 'prog-mode-hook #'envrc-mode))
 
-(provide 'liwl-mac)
-;;; mac.el ends here
+(provide 'personal-mac)
+;;; personal-mac.el ends here

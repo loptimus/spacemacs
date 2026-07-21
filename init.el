@@ -57,7 +57,7 @@ This function should only modify configuration layer settings."
      ;; version-control
      ;; treemacs
      ;; go
-     liwl
+     personal
      )
 
 
@@ -586,6 +586,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
           ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
           ("nongnu"   . "https://elpa.nongnu.org/nongnu/")
           ))
+  (load (expand-file-name "local/user-settings.el" dotspacemacs-directory) t)
   )
 
 
@@ -605,7 +606,7 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded.
 
 All non-trivial user configuration is composed of topic modules loaded
-from layers/liwl/config.el (mac / lsp / ui / writing / ai)."
+from layers/personal/config.el (mac / lsp / ui / writing / ai)."
   )
 
 
@@ -621,7 +622,6 @@ This function is called at the very end of Spacemacs initialization."
    ;; If you edit it by hand, you could mess it up, so be careful.
    ;; Your init file should contain only one such instance.
    ;; If there is more than one, they won't work right.
-   '(org-agenda-files nil)
    '(package-selected-packages
      '(ace-jump-helm-line ace-link aggressive-indent all-the-icons auto-compile
                           auto-highlight-symbol bui centered-cursor-mode
@@ -657,70 +657,7 @@ This function is called at the very end of Spacemacs initialization."
                           term-cursor toc-org toml-mode treemacs-icons-dired
                           treemacs-persp treemacs-projectile undo-tree uuidgen
                           vi-tilde-fringe vim-powerline volatile-highlights
-                          which-key winum writeroom-mode ws-butler xref yaml))
-   '(safe-local-variable-values
-     '((eval progn
-             (setenv "PATH"
-                     (concat (getenv "PATH") ":/Users/lwl/.gvm/gos/go1.24.13/bin"))
-             (setq exec-path (cons "/Users/lwl/.gvm/gos/go1.24.13/bin" exec-path)))
-       (eval progn
-             (setenv "PATH"
-                     (concat (getenv "PATH")
-                             ":/Users/lwl/.gvm/pkgsets/go1.24.13/global/bin"))
-             (setq exec-path
-                   (cons "/Users/lwl/.gvm/pkgsets/go1.24.13/global/bin" exec-path)))
-       (eval setenv "GOPATH" "/Users/lwl/.gvm/pkgsets/go1.24.13/global")
-       (eval setenv "GOSUMDB" "code.miyachat.com/*,xygeek.xiaohuxi.cn/server/*")
-       (eval setenv "GOPATH" "/Users/lwl/.gvm/pkgsets/go1.21.13/global")
-       (eval progn
-             (setenv "PATH"
-                     (concat (getenv "PATH") ":/Users/lwl/.gvm/gos/go1.21.13/bin"))
-             (setq exec-path (cons "/Users/lwl/.gvm/gos/go1.21.13/bin" exec-path)))
-       (eval progn
-             (setenv "PATH"
-                     (concat (getenv "PATH")
-                             ":/Users/lwl/.gvm/pkgsets/go1.21.13/global/bin"))
-             (setq exec-path
-                   (cons "/Users/lwl/.gvm/pkgsets/go1.21.13/global/bin" exec-path)))
-       (eval setenv "GOPATH" "/Users/lwl/.gvm/pkgsets/go1.18/global")
-       (eval progn
-             (setenv "PATH"
-                     (concat (getenv "PATH") ":/Users/lwl/.gvm/gos/go1.20.11/bin"))
-             (setq exec-path (cons "/Users/lwl/.gvm/gos/go1.20.11/bin" exec-path)))
-       (eval progn
-             (setenv "PATH"
-                     (concat (getenv "PATH")
-                             ":/Users/lwl/.gvm/pkgsets/go1.20.11/global/bin"))
-             (setq exec-path
-                   (cons "/Users/lwl/.gvm/pkgsets/go1.20.11/global/bin" exec-path)))
-       (eval setenv "GOPRIVATE"
-             "code.miyachat.com/gomod/*,xygeek.xiaohuxi.cn/server/*")
-       (eval setenv "GOPROXY"
-             "https://go-athens.miyachat.com,https://goproxy.cn,direct")
-       (eval progn
-             (setenv "PATH"
-                     (concat (getenv "PATH") ":/Users/lwl/.gvm/gos/go1.19.11/bin"))
-             (setq exec-path (cons "/Users/lwl/.gvm/gos/go1.19.11/bin" exec-path)))
-       (eval progn
-             (setenv "PATH"
-                     (concat (getenv "PATH")
-                             ":/Users/lwl/.gvm/pkgsets/go1.19.11/global/bin"))
-             (setq exec-path
-                   (cons "/Users/lwl/.gvm/pkgsets/go1.19.11/global/bin" exec-path)))
-       (eval progn
-             (setenv "PATH"
-                     (concat (getenv "PATH") ":/Users/lwl/.gvm/gos/go1.18/bin"))
-             (setq exec-path (cons "/Users/lwl/.gvm/gos/go1.18/bin" exec-path)))
-       (eval progn
-             (setenv "PATH"
-                     (concat (getenv "PATH")
-                             ":/Users/lwl/.gvm/pkgsets/go1.18/global/bin"))
-             (setq exec-path
-                   (cons "/Users/lwl/.gvm/pkgsets/go1.18/global/bin" exec-path)))
-       (eval setenv "LSP_USE_PLISTS" "true")
-       (eval setenv "GOPROXY" "http://192.168.3.220:3000,https://goproxy.cn")
-       (eval setenv "GOSUMDB" "off") (eval setenv "GO111MODULE" "on")
-       (eval setenv "GOPATH" "/Users/lwl/go"))))
+                          which-key winum writeroom-mode ws-butler xref yaml)))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.

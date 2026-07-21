@@ -66,7 +66,6 @@
    plantuml
    ;; mermaid
 
-   ;; my-python
    my-erlang
    )
  )

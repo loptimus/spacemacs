@@ -1,4 +1,4 @@
-;;; ui.el --- UI, mode-line, editing UX -*- lexical-binding: t -*-
+;;; personal-ui.el --- UI, mode-line, editing UX -*- lexical-binding: t -*-
 
 ;; ---------------------------------------------------------------------------
 ;; Time display in mode-line / echo
@@ -68,5 +68,5 @@
   (unless (bound-and-true-p doom-modeline-mode)
     (doom-modeline-mode 1)))
 
-(provide 'liwl-ui)
-;;; ui.el ends here
+(provide 'personal-ui)
+;;; personal-ui.el ends here

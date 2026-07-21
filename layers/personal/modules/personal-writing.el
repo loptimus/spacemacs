@@ -1,4 +1,4 @@
-;;; writing.el --- Documentation and note-taking -*- lexical-binding: t -*-
+;;; personal-writing.el --- Documentation and note-taking -*- lexical-binding: t -*-
 
 ;; ---------------------------------------------------------------------------
 ;; Markdown
@@ -16,10 +16,13 @@
 ;; ---------------------------------------------------------------------------
 ;; Org
 ;; ---------------------------------------------------------------------------
+(defvar personal-org-agenda-files nil
+  "Machine-local Org agenda files loaded from local/user-settings.el.")
+
 (with-eval-after-load 'org
   (add-to-list 'org-export-backends 'md)
-  (setq org-agenda-files
-        '("/Users/lwl/Library/Mobile Documents/com~apple~CloudDocs/org-agenda/todo.org")))
+  (when personal-org-agenda-files
+    (setq org-agenda-files personal-org-agenda-files)))
 
 ;; org-babel languages
 (with-eval-after-load 'org
@@ -41,5 +44,5 @@
   (setq org-latex-default-class "ctexart")
   (setq org-latex-compiler "xelatex"))
 
-(provide 'liwl-writing)
-;;; writing.el ends here
+(provide 'personal-writing)
+;;; personal-writing.el ends here
