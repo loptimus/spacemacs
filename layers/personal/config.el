@@ -8,7 +8,8 @@
 ;;   lsp      -- LSP/projectile tuning before language layers wake up
 ;;   ui       -- mode-line / fonts / editing UX
 ;;   writing  -- markdown / org / plantuml
-;;   ai       -- agent-shell (last; optional, must not block startup)
+;;   ai       -- agent-shell (optional, must not block startup)
+;;   erlang   -- ELP client registration after general LSP tuning
 
 (let ((modules-dir
        (expand-file-name "modules" (file-name-directory load-file-name))))
@@ -20,5 +21,6 @@
 (require 'personal-ui)
 (require 'personal-writing)
 (require 'personal-ai)
+(require 'personal-erlang)
 
 ;;; config.el ends here

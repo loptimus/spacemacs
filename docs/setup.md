@@ -28,19 +28,34 @@ ln -s ~/spacemacs ~/.spacemacs.d
 cp local/user-settings.example.el local/user-settings.el
 ```
 
-该文件在所有 layer 之前加载，目前支持 `personal-org-agenda-files` 和
-`my-erlang-root-path`。工具能从 shell `PATH` 找到时不要设置安装路径；项目专属
-环境放在项目的 `.envrc`。
+该文件在所有 layer 之前加载，目前支持 `personal-org-agenda-files`。工具能从
+shell `PATH` 找到时不要设置安装路径；项目专属环境放在项目的 `.envrc`。
 
 ## 4. 系统依赖（macOS）
 
 ```bash
-brew install direnv ripgrep coreutils go rust node python
+brew install direnv ripgrep coreutils go rust node python shellcheck shfmt
+npm i -g pyright
+
+curl -L -o /tmp/elp.tar.gz \
+  https://github.com/WhatsApp/erlang-language-platform/releases/latest/download/elp-macos-aarch64-apple-darwin-otp-28.tar.gz
+tar -xzf /tmp/elp.tar.gz -C /tmp
+sudo mv /tmp/elp /opt/homebrew/bin/elp
+
+elp version
+pyright --version
+shellcheck --version
+shfmt --version
+
 # 可选：多版本管理器（推荐）
 brew install gvm nvm pyenv
 ```
 
 `direnv` 是必需，`envrc` 靠它注入项目环境。`ripgrep` 是 `C-S-f` 的项目搜索后端。
+ELP 的 release 需与本机架构和 OTP 主版本匹配；上例适用于 Apple Silicon + OTP 28。
+
+Erlang 活节点交互不再使用 distel。本地交互可运行 `M-x erlang-shell`；连接远端节点
+使用终端 `erl -remsh <node>`。
 
 ## 5. Shell 环境
 

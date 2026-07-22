@@ -18,8 +18,13 @@
 ;; nearest `.envrc'.  Restricted to `prog-mode' so writing/reading docs
 ;; does not trigger direnv on every buffer switch.  No-op when the
 ;; `direnv' binary is missing so startup stays clean on fresh machines.
+(defun personal-envrc-mode-maybe ()
+  "Enable `envrc-mode' when the package is available."
+  (when (require 'envrc nil t)
+    (envrc-mode 1)))
+
 (when (executable-find "direnv")
-  (add-hook 'prog-mode-hook #'envrc-mode))
+  (add-hook 'prog-mode-hook #'personal-envrc-mode-maybe))
 
 (provide 'personal-mac)
 ;;; personal-mac.el ends here

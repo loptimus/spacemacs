@@ -17,7 +17,8 @@ init.el
        ├─ (require 'personal-lsp)      ← 语言层唤醒前调好 LSP / GC / projectile
        ├─ (require 'personal-ui)       ← doom-modeline 依赖 LSP 状态显示
        ├─ (require 'personal-writing)  ← markdown / org / plantuml
-       └─ (require 'personal-ai)       ← 最后：agent-shell 加载失败也不阻塞启动
+       ├─ (require 'personal-ai)       ← agent-shell 加载失败也不阻塞启动
+       └─ (require 'personal-erlang)   ← 注册 ELP client，优先于 erlang_ls
 ```
 
 ## 模块职责
@@ -29,6 +30,7 @@ init.el
 | `personal-ui.el` | `display-time`、`mouse-avoidance-mode`、`indent-tabs-mode`、`prog-mode-hook` 的 `fill-column`、dired、yasnippet 目录、doom-modeline |
 | `personal-writing.el` | markdown pandoc、org 导出、org-babel、`ox-latex` ctexart 中文导出、`plantuml-jar-path` |
 | `personal-ai.el` | `agent-shell` 延迟加载、defensive 包裹避免阻塞启动 |
+| `personal-erlang.el` | 注册 ELP client，使用 lsp-mode 提供 Erlang IDE 能力 |
 
 ## 加新模块
 

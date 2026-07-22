@@ -4,7 +4,7 @@
 
 ## 特点
 
-- **模块化布局**：所有个人配置收敛在 `layers/personal/`，其中 `modules/` 按主题拆成 5 个小文件（mac / lsp / ui / writing / ai），加新功能只改一个文件
+- **模块化布局**：所有个人配置收敛在 `layers/personal/`，其中 `modules/` 按主题拆成 6 个小文件（mac / lsp / ui / writing / ai / erlang），加新功能只改一个文件
 - **启动 ~1.3s**（M1 冷启动），关闭 spaceline 走 doom-modeline，GC 阈值调到 100 MB
 - **direnv + envrc** 管每个项目的 Go/Node/Python 版本与环境变量，不再靠 `.dir-locals.el` 硬编码
 - **agent-shell** 统一 UI 驱动 Claude Code / Codex / Gemini
@@ -42,7 +42,7 @@ brew install direnv ripgrep coreutils
 .
 ├── init.el                       # dotspacemacs 主配置（Spacemacs 官方骨架）
 ├── layers/personal/                  # 个人私有层
-│   ├── config.el                 # 聚合器，按序 require 五个模块
+│   ├── config.el                 # 聚合器，按序 require 六个模块
 │   ├── keybindings.el            # 全局键位
 │   ├── funcs.el                  # 复用函数
 │   ├── packages.el / layers.el   # 声明包与官方层
@@ -51,7 +51,8 @@ brew install direnv ripgrep coreutils
 │       ├── personal-lsp.el           # lsp-mode / gopls / projectile
 │       ├── personal-ui.el            # doom-modeline / 字体 / dired / yas
 │       ├── personal-writing.el       # markdown / org / plantuml
-│       └── personal-ai.el            # agent-shell
+│       ├── personal-ai.el            # agent-shell
+│       └── personal-erlang.el        # ELP client 注册
 ├── snippets/                     # yasnippet 用户片段
 ├── local/                        # tracked 资源及 ignored 用户设置
 ├── docs/                         # 本项目文档

@@ -11,61 +11,56 @@
 
 (configuration-layer/declare-layers
  '(
-   sql
-   typescript
-   yaml
-   multiple-cursors
+   ;; 通用基础
    git
    ivy
-   ;; helm
    auto-completion
    syntax-checking
    lsp
-   markdown
-
+   multiple-cursors
    (shell :variables
           shell-default-height 30
           shell-default-position 'bottom)
 
-   ;; 编程
-   ;; ess                     ; R
+   ;; 数据 / 文档 / 配置
+   sql
+   yaml
+   markdown
+   plantuml
+   protobuf
 
+   ;; Emacs Lisp
    emacs-lisp
 
-   ;; (c-c++ :variables c-c++-backend 'lsp-clangd)
+   ;; Python: lsp-mode + pyright (取代 anaconda-mode)
+   (python :variables
+           python-backend 'lsp
+           python-lsp-server 'pyright
+           python-formatter 'black
+           python-format-on-save nil)
 
-   (python :variables python-backend 'anaconda)
-   ipython-notebook
+   ;; Go
+   (go :variables
+       go-tab-width 4)
 
-
-   ;; (syntax-checking
-   ;;  :variables
-   ;;  flycheck-disabled-checkers '(go-vet)
-   ;;  )
-   (go
-    :variables
-    go-tab-width 4
-    ;; gofmt-command "goimports"
-    ;; go-use-gometalinter t
-    ;; go-use-golangci-lint t
-    ;; godoc-at-point-function 'godoc-gogetdoc
-    ;; go-format-before-save t
-    ;; go-backend 'lsp
-    ;; go-use-test-args "-v -race -timeout 10s"
-   )
-   protobuf
+   ;; Web 前端
+   ;; html layer also provides css-mode and emmet-mode.
    html
    (vue :variables vue-backend 'lsp)
    (node :variables node-add-modules-path t)
-   (javascript
-    :variables
-    javascript-import-tool 'import-js
-    javascript-backend 'lsp
-    javascript-fmt-tool 'web-beautify
-    )
-   plantuml
-   ;; mermaid
+   (javascript :variables
+               javascript-import-tool 'import-js
+               javascript-backend 'lsp
+               javascript-fmt-tool 'web-beautify)
+   typescript
 
-   my-erlang
+   ;; PHP: 仅浏览, 无 LSP 后端
+   php
+
+   ;; Shell 脚本 (bash / sh / zsh) + shellcheck / shfmt
+   shell-scripts
+
+   ;; Erlang: 走 lsp-mode + ELP (registration in personal-erlang.el)
+   (erlang :variables erlang-backend 'lsp)
    )
  )

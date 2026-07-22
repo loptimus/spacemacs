@@ -1,3 +1,0 @@
-[submodule "layers/lang/my-erlang/local/distel"]
-	path = layers/lang/my-erlang/local/distel
-	url = https://github.com/loptimus/distel.git
