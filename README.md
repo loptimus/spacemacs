@@ -22,7 +22,7 @@ ln -s ~/spacemacs ~/.spacemacs.d
 git clone -b develop https://github.com/syl20bnr/spacemacs ~/.emacs.d
 
 # 3. 系统依赖（macOS）
-brew install direnv ripgrep coreutils
+brew install direnv ripgrep fd fzf coreutils
 ```
 
 首次启动 Spacemacs 会自动装包，之后按 [docs/setup.md](docs/setup.md) 完成字体、CLI、Go/Node 等一次性配置。

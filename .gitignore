@@ -1,4 +1,5 @@
 .spacemacs.env
 local/user-settings.el
+node_modules/
 .claude/*
 .codex/*

@@ -17,7 +17,7 @@
 |-----|-----|-----|
 | `C-6` | `grep-find` | |
 | `C-S-f` | `counsel-rg` | 项目全局 ripgrep |
-| `<f5>` | `projectile-find-file` | |
+| `C-x C-f` | `counsel-fzf` | 使用 fzf 按文件名搜索项目 |
 
 ### 编辑
 

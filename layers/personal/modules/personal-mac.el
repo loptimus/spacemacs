@@ -5,7 +5,8 @@
 (when (memq window-system '(mac ns))
   (with-eval-after-load 'exec-path-from-shell
     (dolist (var '("GOPATH" "GOROOT" "GOPROXY" "GOSUMDB"
-                   "GO111MODULE" "GOPRIVATE" "LSP_USE_PLISTS"))
+                   "GO111MODULE" "GOPRIVATE" "LSP_USE_PLISTS"
+                   "FZF_DEFAULT_COMMAND"))
       (add-to-list 'exec-path-from-shell-variables var)))
   (when (fboundp 'exec-path-from-shell-initialize)
     (exec-path-from-shell-initialize)))
