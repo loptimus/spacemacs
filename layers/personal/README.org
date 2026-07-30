@@ -50,7 +50,7 @@ npm i -g @agentclientprotocol/codex-acp
 | =C-c P=     | Copy project-relative file path with line      |
 | =C-c w=     | Copy current line to kill ring                 |
 | =C-S-f=     | =counsel-rg= (project-wide ripgrep search)     |
-| =C-x C-f=   | =counsel-fzf= (project file-name search)       |
+| =C-c f=     | =counsel-fzf= (project file-name search)       |
 | =C-;=       | ace-jump-mode                                  |
 | =C-x SPC=   | ace-jump-mode pop mark                         |
 | =SPC a a=   | agent-shell (choose agent)                     |

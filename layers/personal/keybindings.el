@@ -7,7 +7,7 @@
 ;; Search
 (global-set-key (kbd "C-6")   'grep-find)
 (global-set-key (kbd "C-S-f") 'counsel-rg)
-(global-set-key (kbd "C-x C-f") 'counsel-fzf)
+(global-set-key (kbd "C-c f")   'counsel-fzf)
 
 ;; Mark
 (global-set-key (kbd "M-SPC") 'set-mark-command)

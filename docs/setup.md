@@ -52,7 +52,7 @@ brew install gvm nvm pyenv
 ```
 
 `direnv` 是必需，`envrc` 靠它注入项目环境。`ripgrep` 是 `C-S-f` 的项目搜索后端；
-`fd` 和 `fzf` 是 `C-x C-f` 项目文件名搜索的后端。
+`fd` 和 `fzf` 是 `C-c f` 项目文件名搜索的后端。
 ELP 的 release 需与本机架构和 OTP 主版本匹配；上例适用于 Apple Silicon + OTP 28。
 
 Erlang 活节点交互不再使用 distel。本地交互可运行 `M-x erlang-shell`；连接远端节点
